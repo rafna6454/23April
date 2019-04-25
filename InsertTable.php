@@ -1,26 +1,20 @@
 <?php
 include('config.php');
+$name=$_POST['name'];
+$salary=$_POST['salary'];
+$address=$_POST['address'];
+echo $name." ".$salary." ".$address;
+$result=mysqli_query($link,"select count(*) as cnt from employee");
 
-$name = $_POST['name'];
-$salary = $_POST['salary'];
-$address = $_POST['address'];
-echo $name."".$salary. " " . $address;
- 
-//$result = mysqli_query($link, "select count(*) as cnt from employee");
-
-$res = mysqli_query($link,"insert into employee(name,salary,address) values('$name','$salary','$address')");
-if(mysqli_query($link,$res))
+while($row=mysqli_fetch_array($result))
 {
-   echo "Record inserted successfully";
+	$cnt=$row['cnt'];
+	echo $cnt;
+	$sql="insert into employee(id,name,salary,address) values($cnt+1,'$name','$salary','$address')";
+	if(mysqli_query($link,$sql))
+	{
+		echo "Record inserted";
+	}
 }
-
-//while($row=mysql_fetch_array($result))
-//{
-//$cnt = $row('cnt');
-//echo $cnt;
-
-//$sql = "Insert into employee(name,salary,address) values ('$name','$salary','$address');
-
-
 mysqli_close($link);
 ?>
